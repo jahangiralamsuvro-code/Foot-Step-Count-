@@ -1,0 +1,8 @@
+{
+  "name": "Foot Step Count",
+  "description": "Smart Walking, Fitness \u0026 Personal Wellness - Track your steps, monitor hydration, calculate BMI, explore bilingual health guides, and achieve your wellness goals.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
