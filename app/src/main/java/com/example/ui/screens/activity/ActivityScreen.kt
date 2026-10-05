@@ -47,7 +47,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.data.model.DailyActivityRecord
+import com.example.data.model.DailyStepGoalProgress
+import com.example.data.model.UserProfile
 import com.example.ui.components.LiquidGlassCard
+import com.example.ui.components.StepGoalTrackerCard
 import com.example.ui.theme.AmberAccent
 import com.example.ui.theme.CyanAccent
 import com.example.ui.theme.MintAccent
@@ -60,7 +63,9 @@ import java.util.Locale
 fun ActivityScreen(
     todayRecord: DailyActivityRecord?,
     historyList: List<DailyActivityRecord>,
-    isBengali: Boolean
+    userProfile: UserProfile = UserProfile(),
+    isBengali: Boolean,
+    onStepGoalChange: (Int) -> Unit = {}
 ) {
     var selectedTab by remember { mutableIntStateOf(0) } // 0=Day, 1=Week, 2=Month, 3=Year
     val tabTitlesEn = listOf("Day", "Week", "Month", "Year")
@@ -253,6 +258,18 @@ fun ActivityScreen(
                 }
             }
         }
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        // Step Goal Tracker with Progress Bar Indicator
+        val stepGoalProgress = remember(steps, todayRecord?.goal, userProfile.heightCm, userProfile.currentWeightKg) {
+            DailyStepGoalProgress.fromActivityAndProfile(todayRecord, userProfile)
+        }
+        StepGoalTrackerCard(
+            goalProgress = stepGoalProgress,
+            onGoalChange = onStepGoalChange,
+            isBengali = isBengali
+        )
 
         Spacer(modifier = Modifier.height(20.dp))
 

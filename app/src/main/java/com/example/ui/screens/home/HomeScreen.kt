@@ -71,10 +71,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.data.model.DailyActivityRecord
+import com.example.data.model.DailyStepGoalProgress
 import com.example.data.model.UserProfile
 import com.example.ui.components.ActivityRing
 import com.example.ui.components.DailyMetricsRow
 import com.example.ui.components.LiquidGlassCard
+import com.example.ui.components.StepGoalTrackerCard
 import com.example.ui.theme.AmberAccent
 import com.example.ui.theme.CyanAccent
 import com.example.ui.theme.MintAccent
@@ -105,6 +107,7 @@ fun HomeScreen(
     onToggleAutoWalk: () -> Unit,
     onSimulateSteps: (Int) -> Unit,
     onResetTodayActivity: () -> Unit,
+    onStepGoalChange: (Int) -> Unit = {},
     onNavigate: (Screen) -> Unit
 ) {
     val context = LocalContext.current
@@ -548,6 +551,18 @@ fun HomeScreen(
             distanceKm = distance,
             caloriesKcal = calories,
             activeMinutes = activeMinutes,
+            isBengali = isBengali
+        )
+
+        Spacer(modifier = Modifier.height(18.dp))
+
+        // Step Goal Tracker Card with Linear Progress Bar Indicator & Goal Setting
+        val stepGoalProgress = remember(steps, goal, userProfile.heightCm, userProfile.currentWeightKg) {
+            DailyStepGoalProgress.fromActivityAndProfile(activityRecord, userProfile)
+        }
+        StepGoalTrackerCard(
+            goalProgress = stepGoalProgress,
+            onGoalChange = onStepGoalChange,
             isBengali = isBengali
         )
 

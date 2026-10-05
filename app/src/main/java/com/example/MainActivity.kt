@@ -208,6 +208,7 @@ class MainActivity : ComponentActivity() {
                                     onToggleAutoWalk = { viewModel.toggleAutoWalking() },
                                     onSimulateSteps = { count -> viewModel.simulateSteps(count) },
                                     onResetTodayActivity = { viewModel.resetTodayActivity() },
+                                    onStepGoalChange = { goal -> viewModel.updateDailyGoal(goal) },
                                     onNavigate = { screen -> viewModel.navigateTo(screen) }
                                 )
                             }
@@ -215,7 +216,9 @@ class MainActivity : ComponentActivity() {
                                 ActivityScreen(
                                     todayRecord = todayActivity,
                                     historyList = historyList,
-                                    isBengali = isBengali
+                                    userProfile = userProfile,
+                                    isBengali = isBengali,
+                                    onStepGoalChange = { goal -> viewModel.updateDailyGoal(goal) }
                                 )
                             }
                             Screen.ACHIEVEMENTS -> {
